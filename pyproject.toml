@@ -1,0 +1,16 @@
+[project]
+name = "lazy-matmuls"
+version = "0.1.0"
+description = "Lazy matmuls!"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "numpy>=2.3.4",
+    "tqdm>=4.67.1",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.14.5",
+    "ty>=0.0.1a26",
+]
