@@ -5,13 +5,17 @@ from functools import cached_property
 import random
 from utils import plot_cost
 
+np.random.seed(0)
+random.seed(0)
+
+
 Matrix = np.ndarray
 
 
 @dataclass
-class Matmul:
-    left: Matmul | Matrix
-    right: Matmul | Matrix
+class MatMul:
+    left: MatMul | Matrix
+    right: MatMul | Matrix
 
     @cached_property
     def shape(self) -> tuple[int, int]:
@@ -19,7 +23,7 @@ class Matmul:
         return (m, p)
 
     def value(self) -> Matrix:
-        def product(node: Matmul | Matrix) -> Matrix:
+        def product(node: MatMul | Matrix) -> Matrix:
             if isinstance(node, Matrix):
                 return node
             return product(node.left) @ product(node.right)
@@ -32,15 +36,15 @@ def random_matrices(n: int) -> list[Matrix]:
     return [np.random.randn(dims[i], dims[i + 1]) for i in range(n)]
 
 
-def random_order(matrices: list[Matrix]) -> Matmul | Matrix:
+def random_order(matrices: list[Matrix]) -> MatMul | Matrix:
     if len(matrices) == 1:
         return matrices[0]
     k = random.randint(1, len(matrices) - 1)
     left, right = random_order(matrices[:k]), random_order(matrices[k:])
-    return Matmul(left, right)
+    return MatMul(left, right)
 
 
-def flops(node: Matmul | Matrix) -> int:
+def flops(node: MatMul | Matrix) -> int:
     if isinstance(node, Matrix):
         return 0
     (m, n), (n, p) = node.left.shape, node.right.shape
