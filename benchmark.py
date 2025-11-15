@@ -9,6 +9,6 @@ if __name__ == "__main__":
     random_flops = [flops(random_order(mats)) for mats in tqdm(matss)]
     optimal_flops = [flops(optimal_order(mats)) for mats in tqdm(matss)]
 
-    print(f"Random ordering: {format_flops(np.mean(random_flops))}")
-    print(f"Optimal ordering: {format_flops(np.mean(optimal_flops))}")
+    print(f"Random ordering: {format_flops(int(np.mean(random_flops)))}")
+    print(f"Optimal ordering: {format_flops(int(np.mean(optimal_flops)))}")
     print(f"Speed-up: {np.mean(random_flops) / np.mean(optimal_flops):7.1f}×")
